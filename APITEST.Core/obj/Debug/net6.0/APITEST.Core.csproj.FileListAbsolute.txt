@@ -1,0 +1,12 @@
+E:\API\APITEST\APITEST\APITEST.Core\bin\Debug\net6.0\APITEST.Core.deps.json
+E:\API\APITEST\APITEST\APITEST.Core\bin\Debug\net6.0\APITEST.Core.dll
+E:\API\APITEST\APITEST\APITEST.Core\bin\Debug\net6.0\APITEST.Core.pdb
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.csproj.AssemblyReference.cache
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.GeneratedMSBuildEditorConfig.editorconfig
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.AssemblyInfoInputs.cache
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.AssemblyInfo.cs
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.csproj.CoreCompileInputs.cache
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.dll
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\refint\APITEST.Core.dll
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.pdb
+E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\ref\APITEST.Core.dll
