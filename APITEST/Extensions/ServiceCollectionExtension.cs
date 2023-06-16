@@ -9,6 +9,7 @@ namespace APITEST.Extensions
 		public static void AddSevices(this IServiceCollection services)
 		{
 			services.TryAddScoped<IAccountService, AccountService>();
+			services.TryAddScoped<IHomeService, HomeService>();
 		}
 	}
 }

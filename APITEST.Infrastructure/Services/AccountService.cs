@@ -92,25 +92,30 @@ namespace APITEST.Infrastructure.Services
 		{
 			try
 			{
-				DynamicParameters? p = new DynamicParameters();
-				p.Add("@sDanhMuc", "LOGIN");
-				p.Add("@MS_CN", userName);
-				p.Add("@MAT_KHAU", "QiLWP9iaketh5qd3IErKTKu46Hr6bERB");
-				UserModel? resultUser = await _dapper.Execute<UserModel>("spWThongTin", p, CommandType.StoredProcedure);
-				if(resultUser.Res == 1)
-				{
-					string? token = await GeneralToken(userName);
-					UserModel? userProfile = await GetUserProfile(userName);
-					if(userProfile != null)
-					{
-						userProfile.Token = token;
-					}
-					return BaseResponse<UserModel>.Success(userProfile);
-				}
-				else
-				{
-					return BaseResponse<UserModel>.BadRequest(null);
-				}
+				//DynamicParameters? p = new DynamicParameters();
+				//p.Add("@sDanhMuc", "LOGIN");
+				//p.Add("@MS_CN", userName);
+				//p.Add("@MAT_KHAU", "QiLWP9iaketh5qd3IErKTKu46Hr6bERB");
+				//UserModel? resultUser = await _dapper.Execute<UserModel>("spWThongTin", p, CommandType.StoredProcedure);
+				//if(resultUser.Res == 1)
+				//{
+				//	string? token = await GeneralToken(userName);
+				//	UserModel? userProfile = await GetUserProfile(userName);
+				//	if(userProfile != null)
+				//	{
+				//		userProfile.Token = token;
+				//	}
+				//	return BaseResponse<UserModel>.Success(userProfile);
+				//}
+				//else
+				//{
+				//	return BaseResponse<UserModel>.BadRequest(null);
+				//}
+				string? token = await GeneralToken(userName);
+				UserModel? userProfile = new UserModel();
+				userProfile.Token = token;
+
+				return BaseResponse<UserModel>.Success(userProfile);
 			}
 			catch (Exception ex) {
 				return BaseResponse<UserModel>.BadRequest(null, ex.Message);
