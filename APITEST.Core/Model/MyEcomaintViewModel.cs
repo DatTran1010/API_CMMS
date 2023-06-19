@@ -10,7 +10,10 @@ namespace APITEST.Core.Model
 	{
 		public string MS_MAY { get; set; }
 		public string TEN_MAY { get; set; }
-		public IEnumerable<MyEcomaintYeuCauModel> ListYC { get; set; }
+		public int TREGS { get; set; }
+        public string sListYC { get; set; }
+        public string sListBT { get; set; }
+        public IEnumerable<MyEcomaintYeuCauModel> ListYC { get; set; }
 		public IEnumerable<MyEcomaintBaoTriModel> ListBT { get; set; }
 	}
 

@@ -3,6 +3,7 @@ using APITEST.Core.Reponse;
 using APITEST.Infrastructure.Database;
 using APITEST.Infrastructure.IServices;
 using Dapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -92,16 +93,19 @@ namespace APITEST.Infrastructure.Services
 					//myEBaoTri = resultDataTable.Read<MyEcomaintBaoTriModel>().AsList();
 				});
 
-				IEnumerable<MyEcomaintViewModel>? ressult = myEcomaint.Select(x => new MyEcomaintViewModel()
+				IEnumerable<MyEcomaintViewModel> reslut = myEcomaint.Select(x => new MyEcomaintViewModel()
 				{
 					MS_MAY = x.MS_MAY,
 					TEN_MAY = x.TEN_MAY,
-				});
+					TREGS = x.TREGS,
+					ListYC = JsonConvert.DeserializeObject<IEnumerable<MyEcomaintYeuCauModel>>(x.sListYC).AsEnumerable(),
+                    ListBT = JsonConvert.DeserializeObject<IEnumerable<MyEcomaintBaoTriModel>>(x.sListBT).AsEnumerable(),
+                });
+                
 
-				return BaseResponse<IEnumerable<MyEcomaintViewModel>>.Success();
+                return BaseResponse<IEnumerable<MyEcomaintViewModel>>.Success(reslut);
 
 				//List<MyEcomaintViewModel>? res = await _dapper.QueryMultipleAsync<MyEcomaintViewModel>("spCMMSWEB", p, CommandType.StoredProcedure);
-				//res.Where(x => x.sListYC != "").ToList().ForEach(r => r.ListYC = JsonConvert.DeserializeObject<List<MyEcomaintYeuCauModel>>(r.sListYC));
 				//res.Where(x => x.sListBT != "").ToList().ForEach(r => r.ListBT = JsonConvert.DeserializeObject<List<MyEcomaintBaoTriModel>>(r.sListBT));
 				//return res.OrderBy(x => x.MS_MAY).ToList();
 

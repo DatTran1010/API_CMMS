@@ -23,7 +23,7 @@ namespace APITEST.Controllers
 		{
 			try
 			{
-				BaseResponse<IEnumerable< LocationModel >> result = await _homeService.GetLocation(UName, NNgu, CoAll);
+				var result = await _homeService.GetLocation(UName, NNgu, CoAll);
 				return Ok(result);
 			}
 			catch (Exception ex)
@@ -47,7 +47,7 @@ namespace APITEST.Controllers
 		}
 
 		[HttpGet("home/get-myecomaint")]
-		public async Task<ActionResult> GetMyEcomain(string username, int languages, DateTime? dngay, string ms_nx, string mslmay, bool xuly, int pageIndex, int pageSize)
+		public async Task<ActionResult> GetMyEcomain(string username = "admin", int languages = 0, DateTime? dngay = null, string ms_nx = "-1", string mslmay = "-1", bool xuly = true, int pageIndex = 0, int pageSize = 0)
 		{
 			try
 			{

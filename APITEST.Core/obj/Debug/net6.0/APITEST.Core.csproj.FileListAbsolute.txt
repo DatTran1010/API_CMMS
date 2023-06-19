@@ -10,3 +10,15 @@ E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.dll
 E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\refint\APITEST.Core.dll
 E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\APITEST.Core.pdb
 E:\API\APITEST\APITEST\APITEST.Core\obj\Debug\net6.0\ref\APITEST.Core.dll
+D:\TestAPI\API_CMMS\APITEST.Core\bin\Debug\net6.0\APITEST.Core.deps.json
+D:\TestAPI\API_CMMS\APITEST.Core\bin\Debug\net6.0\APITEST.Core.dll
+D:\TestAPI\API_CMMS\APITEST.Core\bin\Debug\net6.0\APITEST.Core.pdb
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\APITEST.Core.csproj.AssemblyReference.cache
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\APITEST.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\APITEST.Core.AssemblyInfoInputs.cache
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\APITEST.Core.AssemblyInfo.cs
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\APITEST.Core.csproj.CoreCompileInputs.cache
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\APITEST.Core.dll
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\refint\APITEST.Core.dll
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\APITEST.Core.pdb
+D:\TestAPI\API_CMMS\APITEST.Core\obj\Debug\net6.0\ref\APITEST.Core.dll
