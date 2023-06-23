@@ -1,6 +1,8 @@
 ﻿using APITEST.Core.Model;
 using APITEST.Core.Reponse;
 using APITEST.Infrastructure.IServices;
+using Firebase.Auth;
+using Firebase.Storage;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +15,15 @@ namespace APITEST.Controllers
 	public class HomeController : Controller
 	{
 		private readonly IHomeService _homeService;
-		public HomeController(IHomeService homeService)
+		private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
+		private static string apiKey = "AIzaSyDln2NkoGScX86HiXaLMhLdKM-9Mihm7VM";
+		private static string Bucket = "uploadfile-754fe.appspot.com";
+		private static string AuthEmail = "dattranlfc@gmail.com";
+		private static string AuthPassword = "tandat";
+		public HomeController(IHomeService homeService, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
 		{
 			_homeService = homeService;
+			_env = env;
 		}
 
 		[HttpGet("home/get-location")]
@@ -59,5 +67,43 @@ namespace APITEST.Controllers
 				return BadRequest(ex);
 			}
 		}
+		[AllowAnonymous]
+		[HttpPost("home/upload-file")]
+		public async Task<ActionResult> UpLoadFile()
+		{
+			try
+			{
+				var fileupload = "Hinh1.png";
+				FileStream fs;
+				string foldername = "firebaseFiles";
+				string path = Path.Combine(_env.ContentRootPath, $"files");
+				fs = new FileStream(Path.Combine(path, fileupload), FileMode.Open);
+
+				var auth = new FirebaseAuthProvider(new FirebaseConfig(apiKey));
+				var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+
+				var cancellation = new CancellationTokenSource();
+
+
+				var task = new FirebaseStorage(
+					Bucket,
+					new FirebaseStorageOptions
+					{
+						AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+						ThrowOnCancel = true
+					})
+					.Child($"image\\Hinh1.png")
+					.PutAsync(fs, cancellation.Token);
+
+				string link = await task;
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex);
+			}
+		}
+
+
 	}
 }

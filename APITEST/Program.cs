@@ -113,6 +113,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 	};
 });
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddCors();
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
@@ -140,4 +142,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("http://192.168.2.16:7174");
+app.Run("http://192.168.1.130:7174");

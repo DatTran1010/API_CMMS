@@ -145,3 +145,7 @@ D:\TestAPI\API_CMMS\APITEST\obj\Debug\net6.0\APITEST.pdb
 D:\TestAPI\API_CMMS\APITEST\obj\Debug\net6.0\APITEST.genruntimeconfig.cache
 D:\TestAPI\API_CMMS\APITEST\obj\Debug\net6.0\ref\APITEST.dll
 D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\Firebase.Auth.dll
+E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\Firebase.Storage.dll
+E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\System.ServiceModel.dll
