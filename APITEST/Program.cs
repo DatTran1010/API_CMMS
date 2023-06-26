@@ -1,8 +1,11 @@
-using APITEST.Core.InMemoryStore;
+﻿using APITEST.Core.InMemoryStore;
 using APITEST.Extensions;
 using APITEST.Infrastructure.Database;
 using APITEST.Infrastructure.IServices;
 using APITEST.Infrastructure.Services;
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Options;
@@ -19,6 +22,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 var allowOrigins = builder.Configuration["AllowOrigins"];
+System.Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", $"Extensions\\firebase-auth.json");
+
+//var firebaseCredential = GoogleCredential.FromFile($"Extensions\\firebase-auth.json");
 
 builder.Services.AddCors(options =>
 {
@@ -35,7 +41,6 @@ builder.Services.AddCors(options =>
     //            .WithHeaders(HeaderNames.ContentType, HeaderNames.Server, HeaderNames.AccessControlAllowHeaders, HeaderNames.AccessControlExposeHeaders, "x-custom-header", "x-path", "x-record-in-use", HeaderNames.ContentDisposition);
     //});
 });
-
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -120,7 +125,23 @@ builder.Services.AddCors();
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSevices();
 
+
+// Thêm cấu hình Firebase Admin SDK
+builder.Services.AddSingleton<FirebaseApp>(sp =>
+{
+	var config = sp.GetRequiredService<IConfiguration>();
+	var path = config.GetValue<string>("Firebase_Config"); // Đường dẫn đến tệp tin JSON
+
+	return FirebaseApp.Create(new AppOptions
+	{
+		Credential = GoogleCredential.FromJson(builder.Configuration.GetValue<string>("Firebase_Config"))
+	});
+});
+
 var app = builder.Build();
+
+var firebaseApp = app.Services.GetRequiredService<FirebaseApp>();
+var firebaseAuth = FirebaseAuth.GetAuth(firebaseApp);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
