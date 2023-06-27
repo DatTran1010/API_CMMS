@@ -14,9 +14,9 @@ namespace APITEST.Infrastructure.IServices
 		public Task<BaseResponse<IEnumerable<LocationModel>>> GetLocation(string UName, int NNgu, int CoAll);
 		public Task<BaseResponse<IEnumerable<MachineModel>>> GetMachine(string UName, int NNgu, int CoAll);
 		public Task<BaseResponse<IEnumerable<MyEcomaintViewModel>>> GetMyEcomain(string username, int languages, DateTime? dngay, string ms_nx, string mslmay, bool xuly, int pageIndex, int pageSize);
-		public Task<string> AuthenticateUserAsync(string authName, string authPassword);
-		public Task<string> UploadFileAsync(Stream fileStream, string fileName, string authenEmail, string authenPassword);
-		public Task<IEnumerable<string>> GetFileAsync();
-		public Task DownloadFileAsync(string fileName, string localPath);
+		public Task<BaseResponse<object>> AuthenticateUserAsync(string authName, string authPassword);
+		public Task<BaseResponse<string>> UploadFileAsync(Stream fileStream, string fileName);
+		public Task<BaseResponse<IEnumerable<string>>> GetFileAsync();
+		public Task<BaseResponse<string>> DownloadFileAsync(string fileName, string localPath, string pathFile);
 	}
 }

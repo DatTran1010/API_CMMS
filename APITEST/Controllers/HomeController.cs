@@ -150,13 +150,13 @@ namespace APITEST.Controllers
 
 		[HttpGet("home/get-authen")]
 		[AllowAnonymous]
-		public async Task<ActionResult> CheckAuthen()
+		public async Task<ActionResult> CheckAuthen(string authEmail, string authPassword)
 		{
 			try
 			{
 
-				var authen = await _homeService.AuthenticateUserAsync(AuthEmail, AuthPassword);
-				return Ok();
+				var result = await _homeService.AuthenticateUserAsync(authEmail, authPassword);
+				return Ok(result);
 			}
 			catch (Exception ex)
 			{
@@ -166,22 +166,21 @@ namespace APITEST.Controllers
 
 		[AllowAnonymous]
 		[HttpPost("home/upload-file")]
-		public async Task<ActionResult> UpLoadFile()
+		public async Task<ActionResult> UpLoadFile(string fileName, string path, string token)
 		{
 			try
 			{
-				var fileupload = "TestUpload.txt";
 				FileStream fs;
-				string path = Path.Combine(_env.ContentRootPath, "E:\\Lamviec\\Lamviec");
-				fs = new FileStream(Path.Combine(path, fileupload), FileMode.Open);
-
-				var result = await _homeService.UploadFileAsync(fs, fileupload, AuthEmail, AuthPassword);
+				string localPath = Path.Combine(_env.ContentRootPath, path);
+				fs = new FileStream(Path.Combine(path, fileName), FileMode.Open,FileAccess.ReadWrite,FileShare.ReadWrite);
+			
+				var result = await _homeService.UploadFileAsync(fs, fileName);
 
 				return Ok(result);
 			}
 			catch (Exception ex)
 			{
-				return BadRequest(ex);
+				return BadRequest(ex.Message);
 			}
 		}
 
@@ -201,13 +200,13 @@ namespace APITEST.Controllers
 		}
 
 		[AllowAnonymous]
-		[HttpGet("home/download-file")]
-		public async Task<ActionResult> DownLoadFile()
+		[HttpPost("home/download-file")]
+		public async Task<ActionResult> DownLoadFile(string fileName, string localPath, string firebaseFilePath) // filePath file trên firebase
 		{
 			try
 			{
-				await _homeService.DownloadFileAsync("image/TestUpload.txt", "E:\\Lamviec");
-				return Ok();
+				var resutl =  await _homeService.DownloadFileAsync(fileName, localPath, firebaseFilePath);
+				return Ok(resutl);
 			}
 			catch (Exception ex)
 			{

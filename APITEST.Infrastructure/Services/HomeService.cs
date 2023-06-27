@@ -4,10 +4,12 @@ using APITEST.Infrastructure.Database;
 using APITEST.Infrastructure.IServices;
 using Dapper;
 using FirebaseAdmin.Auth;
+using Google.Apis.Auth.OAuth2;
 using Google.Apis.Download;
 using Google.Apis.Storage.v1.Data;
 using Google.Cloud.Storage.V1;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +21,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace APITEST.Infrastructure.Services
 {
@@ -132,30 +135,43 @@ namespace APITEST.Infrastructure.Services
 				return BaseResponse<IEnumerable<MyEcomaintViewModel>>.InternalServerError(ex);
 			}
 		}
-		public async Task<string> UploadFileAsync(Stream fileStream, string fileName, string authenEmail, string authenPassword)
+		public async Task<BaseResponse<string>> UploadFileAsync(Stream fileStream, string fileName)
 		{
 			try
 			{
-				var toKen = await AuthenticateUserAsync(authenEmail, authenPassword);
-				if (toKen == "")
-				{
-					return toKen;
-				}
-				//_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", toKen);
-
-				var objectName = "image/" + fileName; // Đường dẫn và tên tệp tin trên Firebase Storage
+				var objectName = fileName; // Đường dẫn và tên tệp tin trên Firebase Storage
 				var contentType = "application/octet-stream"; // Kiểu nội dung của tệp tin
 
-				var uploadObject = await _storageClient.UploadObjectAsync("uploadfile-754fe.appspot.com", objectName, contentType, fileStream, null);
+				// kiểm tồn tại
+				BaseResponse<IEnumerable<string>> listFiles = await GetFileAsync();
+				foreach(var files in listFiles.ResponseData)
+				{
+					if(objectName == files) //nếu tồn tại thì + thêm ngày vào file
+					{
+						objectName = DateTime.Now.ToString("ddMMyyyy-") + files;
+					}
+				}
 
-				return uploadObject.MediaLink;
+				//var uploadObjectOptions = new UploadObjectOptions
+				//{
+				//	PredefinedAcl = PredefinedObjectAcl.PublicRead, // Cấp quyền truy cập công khai cho tệp tin (tùy chọn)
+				//	IfGenerationMatch = 0, // Kiểm tra thế hệ tệp tin (tùy chọn)
+				//	IfMetagenerationMatch = 0, // Kiểm tra thế hệ metadata (tùy chọn)
+				//};
+
+				//// Gắn idToken vào header
+				//var credential = GoogleCredential.FromAccessToken(token);
+				//var storageClient = StorageClient.Create(credential);
+				var uploadObject = await _storageClient.UploadObjectAsync(_bucket, objectName, contentType, fileStream);
+
+				return BaseResponse<string>.Success(uploadObject.MediaLink);
 			}
 			catch (Exception ex)
 			{
-				return ex.Message;
+				return BaseResponse<string>.InternalServerError(ex);
 			}
 		}
-		public async Task<string> AuthenticateUserAsync(string authName, string authPassword)
+		public async Task<BaseResponse<object>> AuthenticateUserAsync(string authName, string authPassword)
 		{
 			try
 			{
@@ -173,58 +189,68 @@ namespace APITEST.Infrastructure.Services
 
 				var response = await _httpClient.PostAsync(signInUrl, content);
 				var responseContent = await response.Content.ReadAsStringAsync();
+				var responseJson = JsonDocument.Parse(responseContent);
 				if (response.IsSuccessStatusCode)
 				{
-					var responseJson = JsonDocument.Parse(responseContent);
 					var idToken = responseJson.RootElement.GetProperty("idToken").GetString();
 
-					return idToken;
+					return BaseResponse<object>.Success(idToken);
 				}
 				else
 				{
-					return $"Failed to sign in with email and password: {responseContent}";
+
+					return BaseResponse<object>.BadRequest(responseJson.RootElement.GetProperty("error").GetProperty("message").GetString());
 				}
 			}
 			catch (Exception ex)
 			{
-				return ex.Message;
+				return BaseResponse<object>.InternalServerError(ex);
 			}
 		}
-		public async Task<IEnumerable<string>> GetFileAsync()
-		{
-			var objecfiles = _storageClient.ListObjectsAsync(_bucket);
-			List<string> fileName = new List<string>();
-			await foreach (var obj in objecfiles)
-			{
-				fileName.Add(obj.MediaLink);
-			}
-			return fileName;
-		}
-
-		public async Task DownloadFileAsync(string fileName, string localPath)
+		public async Task<BaseResponse<IEnumerable<string>>> GetFileAsync()
 		{
 			try
 			{
-				var storageObject = await _storageClient.GetObjectAsync(_bucket, fileName);
-
-                var client = StorageClient.Create();
-                var source = "image/TestUpload.txt";
-                var destination = "D:\\TestUpload.txt";
-
-                using (var stream = File.Create(destination))
-                {
-                    // IDownloadProgress defined in Google.Apis.Download namespace
-                    //var progress = new Progress<IDownloadProgress>(
-                    //    p => Console.WriteLine($"bytes: {p.BytesDownloaded}, status: {p.Status}")
-                    //);
-
-                    // Download source object from bucket to local file system
-                    await client.DownloadObjectAsync(_bucket, source, stream, null);
-                }
-            }
+				var objecfiles = _storageClient.ListObjectsAsync(_bucket);
+				List<string> fileName = new List<string>();
+				await foreach (var obj in objecfiles)
+				{
+					fileName.Add(obj.Name);
+				}
+				return BaseResponse<IEnumerable<string>>.Success(fileName);
+			}
 			catch (Exception ex)
 			{
+				return BaseResponse<IEnumerable<string>>.InternalServerError(ex);
+			}
 
+		}
+
+		public async Task<BaseResponse<string>> DownloadFileAsync(string fileName, string localPath, string pathFile)
+		{
+			try
+			{
+				//var storageObject = await _storageClient.GetObjectAsync(_bucket, fileName);
+
+				var source = pathFile;
+				var destination = $"{localPath}\\{fileName}";
+
+
+				using (var stream = File.Create(destination))
+				{
+					// IDownloadProgress defined in Google.Apis.Download namespace
+					//var progress = new Progress<IDownloadProgress>(
+					//    p => Console.WriteLine($"bytes: {p.BytesDownloaded}, status: {p.Status}")
+					//);
+
+					// Download source object from bucket to local file system
+					var result = await _storageClient.DownloadObjectAsync(_bucket, source, stream, null);
+					return BaseResponse<string>.Success("Download Sucess");
+				}
+			}
+			catch (Exception ex)
+			{
+				return BaseResponse<string>.BadRequest(ex.Message);
 			}
 
 		}
