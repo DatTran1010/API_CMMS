@@ -160,3 +160,17 @@ E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\Google.Apis.Core.dll
 E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\Google.Apis.Storage.v1.dll
 E:\API\APITEST\APITEST\APITEST\bin\Debug\net6.0\Google.Cloud.Storage.V1.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Extensions\firebase-auth.json
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Firebase.Auth.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\FirebaseAdmin.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Firebase.Storage.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Api.Gax.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Api.Gax.Rest.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Apis.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Apis.Auth.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Apis.Core.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Apis.Storage.v1.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Google.Cloud.Storage.V1.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\TestAPI\API_CMMS\APITEST\bin\Debug\net6.0\System.ServiceModel.dll

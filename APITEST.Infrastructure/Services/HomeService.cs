@@ -4,6 +4,7 @@ using APITEST.Infrastructure.Database;
 using APITEST.Infrastructure.IServices;
 using Dapper;
 using FirebaseAdmin.Auth;
+using Google.Apis.Download;
 using Google.Apis.Storage.v1.Data;
 using Google.Cloud.Storage.V1;
 using Newtonsoft.Json;
@@ -206,9 +207,21 @@ namespace APITEST.Infrastructure.Services
 			{
 				var storageObject = await _storageClient.GetObjectAsync(_bucket, fileName);
 
-				await using var fileStream = File.Create(localPath);
-				await _storageClient.DownloadObjectAsync(storageObject, fileStream);
-			}
+                var client = StorageClient.Create();
+                var source = "image/TestUpload.txt";
+                var destination = "D:\\TestUpload.txt";
+
+                using (var stream = File.Create(destination))
+                {
+                    // IDownloadProgress defined in Google.Apis.Download namespace
+                    //var progress = new Progress<IDownloadProgress>(
+                    //    p => Console.WriteLine($"bytes: {p.BytesDownloaded}, status: {p.Status}")
+                    //);
+
+                    // Download source object from bucket to local file system
+                    await client.DownloadObjectAsync(_bucket, source, stream, null);
+                }
+            }
 			catch (Exception ex)
 			{
 

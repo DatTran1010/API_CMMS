@@ -1,25 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "E:\\API\\APITEST\\APITEST\\APITEST\\APITEST.csproj": {}
+    "D:\\TestAPI\\API_CMMS\\APITEST\\APITEST.csproj": {}
   },
   "projects": {
-    "E:\\API\\APITEST\\APITEST\\APITEST.Core\\APITEST.Core.csproj": {
+    "D:\\TestAPI\\API_CMMS\\APITEST.Core\\APITEST.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\API\\APITEST\\APITEST\\APITEST.Core\\APITEST.Core.csproj",
+        "projectUniqueName": "D:\\TestAPI\\API_CMMS\\APITEST.Core\\APITEST.Core.csproj",
         "projectName": "APITEST.Core",
-        "projectPath": "E:\\API\\APITEST\\APITEST\\APITEST.Core\\APITEST.Core.csproj",
-        "packagesPath": "C:\\Users\\DAT\\.nuget\\packages\\",
-        "outputPath": "E:\\API\\APITEST\\APITEST\\APITEST.Core\\obj\\",
+        "projectPath": "D:\\TestAPI\\API_CMMS\\APITEST.Core\\APITEST.Core.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "D:\\TestAPI\\API_CMMS\\APITEST.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\DAT\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,7 +27,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -67,26 +67,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\API\\APITEST\\APITEST\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj": {
+    "D:\\TestAPI\\API_CMMS\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\API\\APITEST\\APITEST\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj",
+        "projectUniqueName": "D:\\TestAPI\\API_CMMS\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj",
         "projectName": "APITEST.Infrastructure",
-        "projectPath": "E:\\API\\APITEST\\APITEST\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\DAT\\.nuget\\packages\\",
-        "outputPath": "E:\\API\\APITEST\\APITEST\\APITEST.Infrastructure\\obj\\",
+        "projectPath": "D:\\TestAPI\\API_CMMS\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "D:\\TestAPI\\API_CMMS\\APITEST.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\DAT\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -94,15 +94,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\API\\APITEST\\APITEST\\APITEST.Core\\APITEST.Core.csproj": {
-                "projectPath": "E:\\API\\APITEST\\APITEST\\APITEST.Core\\APITEST.Core.csproj"
+              "D:\\TestAPI\\API_CMMS\\APITEST.Core\\APITEST.Core.csproj": {
+                "projectPath": "D:\\TestAPI\\API_CMMS\\APITEST.Core\\APITEST.Core.csproj"
               }
             }
           }
@@ -178,26 +178,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\API\\APITEST\\APITEST\\APITEST\\APITEST.csproj": {
+    "D:\\TestAPI\\API_CMMS\\APITEST\\APITEST.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\API\\APITEST\\APITEST\\APITEST\\APITEST.csproj",
+        "projectUniqueName": "D:\\TestAPI\\API_CMMS\\APITEST\\APITEST.csproj",
         "projectName": "APITEST",
-        "projectPath": "E:\\API\\APITEST\\APITEST\\APITEST\\APITEST.csproj",
-        "packagesPath": "C:\\Users\\DAT\\.nuget\\packages\\",
-        "outputPath": "E:\\API\\APITEST\\APITEST\\APITEST\\obj\\",
+        "projectPath": "D:\\TestAPI\\API_CMMS\\APITEST\\APITEST.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "D:\\TestAPI\\API_CMMS\\APITEST\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\DevExpress 22.1\\Components\\Offline Packages",
+          "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\DAT\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.1.config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -205,15 +205,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\DevExpress 22.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\API\\APITEST\\APITEST\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj": {
-                "projectPath": "E:\\API\\APITEST\\APITEST\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj"
+              "D:\\TestAPI\\API_CMMS\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj": {
+                "projectPath": "D:\\TestAPI\\API_CMMS\\APITEST.Infrastructure\\APITEST.Infrastructure.csproj"
               }
             }
           }
@@ -268,7 +268,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
