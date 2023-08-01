@@ -166,7 +166,7 @@ namespace APITEST.Controllers
 
 		[AllowAnonymous]
 		[HttpPost("home/upload-file")]
-		public async Task<ActionResult> UpLoadFile(string fileName, string path, string token)
+		public async Task<ActionResult> UpLoadFile(string fileName, string path)
 		{
 			try
 			{
@@ -206,6 +206,20 @@ namespace APITEST.Controllers
 			try
 			{
 				var resutl =  await _homeService.DownloadFileAsync(fileName, localPath, firebaseFilePath);
+				return Ok(resutl);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex);
+			}
+		}
+		[AllowAnonymous]
+		[HttpGet("home/get-info-ultraviewer")]
+		public async Task<ActionResult> GetInfoUltraViewer() // filePath file trên firebase
+		{
+			try
+			{
+				var resutl = await _homeService.GetInfoUltraViewer();
 				return Ok(resutl);
 			}
 			catch (Exception ex)

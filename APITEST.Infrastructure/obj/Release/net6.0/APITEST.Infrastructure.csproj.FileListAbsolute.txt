@@ -1,0 +1,15 @@
+E:\API\APITEST\APITEST\APITEST.Infrastructure\bin\Release\net6.0\APITEST.Infrastructure.deps.json
+E:\API\APITEST\APITEST\APITEST.Infrastructure\bin\Release\net6.0\APITEST.Infrastructure.dll
+E:\API\APITEST\APITEST\APITEST.Infrastructure\bin\Release\net6.0\APITEST.Infrastructure.pdb
+E:\API\APITEST\APITEST\APITEST.Infrastructure\bin\Release\net6.0\APITEST.Core.dll
+E:\API\APITEST\APITEST\APITEST.Infrastructure\bin\Release\net6.0\APITEST.Core.pdb
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.csproj.AssemblyReference.cache
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.AssemblyInfoInputs.cache
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.AssemblyInfo.cs
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.csproj.CoreCompileInputs.cache
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.csproj.CopyComplete
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.dll
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\refint\APITEST.Infrastructure.dll
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\APITEST.Infrastructure.pdb
+E:\API\APITEST\APITEST\APITEST.Infrastructure\obj\Release\net6.0\ref\APITEST.Infrastructure.dll

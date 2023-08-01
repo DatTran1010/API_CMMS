@@ -14,12 +14,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Google.Apis.Requests.BatchRequest;
 
@@ -252,7 +255,126 @@ namespace APITEST.Infrastructure.Services
 			{
 				return BaseResponse<string>.BadRequest(ex.Message);
 			}
+		}
 
+		public async Task<BaseResponse<TeamviewerHelper>> GetInfoUltraViewer()
+		{
+			try
+			{
+				Process.Start("C:\\Program Files (x86)\\UltraViewer\\UltraViewer_Desktop.exe");
+				// Tạm dừng thực thi trong 5 giây
+				Thread.Sleep(5000);
+
+				var userInfo = GetUser("UltraViewer 6.4 - Free", "WindowsForms10.EDIT.app.0.34f5582_r14_ad1");
+
+				return BaseResponse<TeamviewerHelper>.Success(userInfo);
+			}
+			catch(Exception ex)
+			{
+				return BaseResponse<TeamviewerHelper>.InternalServerError(ex);
+			}
+		}
+		public class WindowsApi
+		{
+			[DllImport("User32.dll", EntryPoint = "FindWindow")]
+			public extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+			[DllImport("User32.dll", EntryPoint = "FindWindowEx")]
+			public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpClassName, string lpWindowName);
+
+
+			[DllImport("User32.dll", EntryPoint = "SendMessage")]
+			public static extern int SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, StringBuilder lParam);
+
+			[DllImport("user32.dll", EntryPoint = "GetWindowText")]
+			public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
+
+			[DllImport("user32.dll", SetLastError = true)]
+			public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowCmd uCmd);
+
+			[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+			public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+			[DllImport("user32.dll", EntryPoint = "ShowWindow")]
+			public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+		}
+		public enum GetWindowCmd : uint
+		{
+			GW_HWNDFIRST = 0,
+			GW_HWNDLAST = 1,
+			GW_HWNDNEXT = 2,
+			GW_HWNDPREV = 3,
+			GW_OWNER = 4,
+			GW_CHILD = 5,
+			GW_ENABLEDPOPUP = 6
+		}
+		private static Regex userReg;
+		public class TeamviewerHelper
+		{
+			static TeamviewerHelper()
+			{
+				userReg = new Regex(@"\d+ \d+ \d+", RegexOptions.Singleline | RegexOptions.Compiled);
+			}
+			public TeamviewerHelper()
+			{
+				Username = string.Empty;
+				Password = string.Empty;
+				Holder = string.Empty;
+			}
+			internal int _count;
+			public string Username;
+			public string Password;
+			public string Holder;
+		}
+		public static TeamviewerHelper GetUser(string titleApp, string className)
+		{
+			TeamviewerHelper user = new TeamviewerHelper();
+			IntPtr tvHwnd = WindowsApi.FindWindow(null, titleApp);
+			if (tvHwnd != IntPtr.Zero)
+			{
+				IntPtr winParentPtr = WindowsApi.GetWindow(tvHwnd, GetWindowCmd.GW_CHILD);
+				while (winParentPtr != IntPtr.Zero)
+				{
+
+					IntPtr winSubPtr = WindowsApi.GetWindow(winParentPtr, GetWindowCmd.GW_CHILD);
+					while (winSubPtr != IntPtr.Zero)
+					{
+						StringBuilder controlName = new StringBuilder(512);
+						WindowsApi.GetClassName(winSubPtr, controlName, controlName.Capacity);
+
+						if (controlName.ToString() == className)
+						{
+							var a = controlName;
+							StringBuilder winMessage = new StringBuilder(512);
+							WindowsApi.SendMessage(winSubPtr, 0xD, (IntPtr)winMessage.Capacity, winMessage);
+							string message = winMessage.ToString();
+							if (userReg.IsMatch(message))
+							{
+								user.Username = message;
+								user._count += 1;
+
+							}
+							else if (user.Password != string.Empty)
+							{
+								user.Holder = message;
+								user._count += 1;
+							}
+							else
+							{
+								user.Password = message;
+								user._count += 1;
+							}
+							if (user._count == 100)
+							{
+								return user;
+							}
+						}
+						winSubPtr = WindowsApi.GetWindow(winSubPtr, GetWindowCmd.GW_HWNDNEXT);
+					}
+					winParentPtr = WindowsApi.GetWindow(winParentPtr, GetWindowCmd.GW_HWNDNEXT);
+				}
+			}
+			return user;
 		}
 	}
 }

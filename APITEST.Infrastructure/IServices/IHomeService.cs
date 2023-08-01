@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static APITEST.Infrastructure.Services.HomeService;
 
 namespace APITEST.Infrastructure.IServices
 {
@@ -18,5 +19,6 @@ namespace APITEST.Infrastructure.IServices
 		public Task<BaseResponse<string>> UploadFileAsync(Stream fileStream, string fileName);
 		public Task<BaseResponse<IEnumerable<string>>> GetFileAsync();
 		public Task<BaseResponse<string>> DownloadFileAsync(string fileName, string localPath, string pathFile);
+		public Task<BaseResponse<TeamviewerHelper>> GetInfoUltraViewer();
 	}
 }
