@@ -4,12 +4,12 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace APITEST.Extensions
 {
-	public static class ServiceCollectionExtension
-	{
-		public static void AddSevices(this IServiceCollection services)
-		{
-			services.TryAddScoped<IAccountService, AccountService>();
-			services.TryAddScoped<IHomeService, HomeService>();
-		}
-	}
+    public static class ServiceCollectionExtension
+    {
+        public static void AddSevices(this IServiceCollection services)
+        {
+            services.TryAddScoped<IAccountService, AccountService>();
+            services.TryAddScoped<IHomeService, HomeService>();
+        }
+    }
 }

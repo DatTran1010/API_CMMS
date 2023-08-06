@@ -1,13 +1,16 @@
 ﻿using APITEST.Core.Model;
 using APITEST.Core.Reponse;
+using APITEST.Extensions;
 using APITEST.Infrastructure.Database;
 using APITEST.Infrastructure.IServices;
+using CorePush.Google;
 using Dapper;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Download;
 using Google.Apis.Storage.v1.Data;
 using Google.Cloud.Storage.V1;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -24,6 +27,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static APITEST.Core.Model.GoogleNotification;
 using static Google.Apis.Requests.BatchRequest;
 
 namespace APITEST.Infrastructure.Services
@@ -35,17 +39,23 @@ namespace APITEST.Infrastructure.Services
 		private readonly FirebaseAuth _firebaseAuth;
 		private readonly HttpClient _httpClient;
 
-		private readonly string apiKey = "AIzaSyDln2NkoGScX86HiXaLMhLdKM-9Mihm7VM";
+
+        private readonly FcmNotificationSetting _fcmNotificationSetting;
+
+
+        private readonly string apiKey = "AIzaSyDln2NkoGScX86HiXaLMhLdKM-9Mihm7VM";
 		private readonly string _bucket = "uploadfile-754fe.appspot.com";
-		public HomeService(IDapperService dapper)
+		public HomeService(IDapperService dapper, IOptions<FcmNotificationSetting> settings)
 		{
 			_dapper = dapper;
 			_storageClient = StorageClient.Create();
 			_firebaseAuth = FirebaseAuth.DefaultInstance;
 			_httpClient = new HttpClient();
-		}
+            _fcmNotificationSetting = settings.Value;
 
-		public async Task<BaseResponse<IEnumerable<LocationModel>>> GetLocation(string UName, int NNgu, int CoAll)
+        }
+
+        public async Task<BaseResponse<IEnumerable<LocationModel>>> GetLocation(string UName, int NNgu, int CoAll)
 		{
 			try
 			{
@@ -257,124 +267,75 @@ namespace APITEST.Infrastructure.Services
 			}
 		}
 
-		public async Task<BaseResponse<TeamviewerHelper>> GetInfoUltraViewer()
-		{
-			try
-			{
-				Process.Start("C:\\Program Files (x86)\\UltraViewer\\UltraViewer_Desktop.exe");
-				// Tạm dừng thực thi trong 5 giây
-				Thread.Sleep(5000);
 
-				var userInfo = GetUser("UltraViewer 6.4 - Free", "WindowsForms10.EDIT.app.0.34f5582_r14_ad1");
+        #region notification
+        public async Task<ResponseModel> SendNotification(NotificationModel notificationModel)
+        {
+            ResponseModel response = new ResponseModel();
+            try
+            {
+                if (notificationModel.IsAndroiodDevice)
+                {
+                    /* FCM Sender (Android Device) */
+                    FcmSettings settings = new FcmSettings()
+                    {
+                        SenderId = _fcmNotificationSetting.SenderId,
+                        ServerKey = _fcmNotificationSetting.ServerKey
+                    };
+                    HttpClient httpClient = new HttpClient();
 
-				return BaseResponse<TeamviewerHelper>.Success(userInfo);
-			}
-			catch(Exception ex)
-			{
-				return BaseResponse<TeamviewerHelper>.InternalServerError(ex);
-			}
-		}
-		public class WindowsApi
-		{
-			[DllImport("User32.dll", EntryPoint = "FindWindow")]
-			public extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
+                    string authorizationKey = string.Format("keyy={0}", settings.ServerKey);
+                    string deviceToken = notificationModel.DeviceId;
 
-			[DllImport("User32.dll", EntryPoint = "FindWindowEx")]
-			public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpClassName, string lpWindowName);
+                    httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authorizationKey);
+                    httpClient.DefaultRequestHeaders.Accept
+                            .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    DataPayload dataPayload = new DataPayload();
+                    dataPayload.Title = notificationModel.Title;
+                    dataPayload.Body = notificationModel.Body;
+
+                    GoogleNotification notification = new GoogleNotification();
+                    notification.Data = dataPayload;
+                    notification.Notification = dataPayload;
+
+                    var fcm = new FcmSender(settings, httpClient);
+                    var fcmSendResponse = await fcm.SendAsync(deviceToken, notification);
+
+                    if (fcmSendResponse.IsSuccess())
+                    {
+                        response.IsSuccess = true;
+                        response.Message = "Notification sent successfully";
+                        return response;
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.Message = fcmSendResponse.Results[0].Error;
+                        return response;
+                    }
+                }
+                else
+                {
+
+                    FirebaseToken decodedToken = await FirebaseAuth.DefaultInstance
+    .VerifyIdTokenAsync(idToken);
+                    string uid = decodedToken.Uid;
 
 
-			[DllImport("User32.dll", EntryPoint = "SendMessage")]
-			public static extern int SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, StringBuilder lParam);
-
-			[DllImport("user32.dll", EntryPoint = "GetWindowText")]
-			public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
-
-			[DllImport("user32.dll", SetLastError = true)]
-			public static extern IntPtr GetWindow(IntPtr hWnd, GetWindowCmd uCmd);
-
-			[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-			public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-
-			[DllImport("user32.dll", EntryPoint = "ShowWindow")]
-			public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-		}
-		public enum GetWindowCmd : uint
-		{
-			GW_HWNDFIRST = 0,
-			GW_HWNDLAST = 1,
-			GW_HWNDNEXT = 2,
-			GW_HWNDPREV = 3,
-			GW_OWNER = 4,
-			GW_CHILD = 5,
-			GW_ENABLEDPOPUP = 6
-		}
-		private static Regex userReg;
-		public class TeamviewerHelper
-		{
-			static TeamviewerHelper()
-			{
-				userReg = new Regex(@"\d+ \d+ \d+", RegexOptions.Singleline | RegexOptions.Compiled);
-			}
-			public TeamviewerHelper()
-			{
-				Username = string.Empty;
-				Password = string.Empty;
-				Holder = string.Empty;
-			}
-			internal int _count;
-			public string Username;
-			public string Password;
-			public string Holder;
-		}
-		public static TeamviewerHelper GetUser(string titleApp, string className)
-		{
-			TeamviewerHelper user = new TeamviewerHelper();
-			IntPtr tvHwnd = WindowsApi.FindWindow(null, titleApp);
-			if (tvHwnd != IntPtr.Zero)
-			{
-				IntPtr winParentPtr = WindowsApi.GetWindow(tvHwnd, GetWindowCmd.GW_CHILD);
-				while (winParentPtr != IntPtr.Zero)
-				{
-
-					IntPtr winSubPtr = WindowsApi.GetWindow(winParentPtr, GetWindowCmd.GW_CHILD);
-					while (winSubPtr != IntPtr.Zero)
-					{
-						StringBuilder controlName = new StringBuilder(512);
-						WindowsApi.GetClassName(winSubPtr, controlName, controlName.Capacity);
-
-						if (controlName.ToString() == className)
-						{
-							var a = controlName;
-							StringBuilder winMessage = new StringBuilder(512);
-							WindowsApi.SendMessage(winSubPtr, 0xD, (IntPtr)winMessage.Capacity, winMessage);
-							string message = winMessage.ToString();
-							if (userReg.IsMatch(message))
-							{
-								user.Username = message;
-								user._count += 1;
-
-							}
-							else if (user.Password != string.Empty)
-							{
-								user.Holder = message;
-								user._count += 1;
-							}
-							else
-							{
-								user.Password = message;
-								user._count += 1;
-							}
-							if (user._count == 100)
-							{
-								return user;
-							}
-						}
-						winSubPtr = WindowsApi.GetWindow(winSubPtr, GetWindowCmd.GW_HWNDNEXT);
-					}
-					winParentPtr = WindowsApi.GetWindow(winParentPtr, GetWindowCmd.GW_HWNDNEXT);
-				}
-			}
-			return user;
-		}
-	}
+                    /* Code here for APN Sender (iOS Device) */
+                    //var apn = new ApnSender(apnSettings, httpClient);
+                    //await apn.SendAsync(notification, deviceToken);
+                }
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = "Something went wrong";
+                return response;
+            }
+        }
+        #endregion
+    }
 }

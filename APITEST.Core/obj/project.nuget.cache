@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "iYcA/3cNvmBYA+Gh/89LzN1ipmrq1fV8KkD7LpaI/ibxBw1AREgRuLYGlcpQBo/ffx8slImsEOC5W8g48NNlIg==",
+  "dgSpecHash": "GBXLpGifZKXyQtUT8MyB3X2fEaMUWwlKh5JK1Q5by7WIAWD82dMfJMYA0SeY3IfqXZxT9V85Pq7+dTyuK6CfgA==",
   "success": true,
   "projectFilePath": "E:\\API\\APITEST\\APITEST\\APITEST.Core\\APITEST.Core.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\DAT\\.nuget\\packages\\corepush\\3.1.1\\corepush.3.1.1.nupkg.sha512",
     "C:\\Users\\DAT\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.8\\microsoft.aspnetcore.cryptography.internal.6.0.8.nupkg.sha512",
     "C:\\Users\\DAT\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.8\\microsoft.aspnetcore.cryptography.keyderivation.6.0.8.nupkg.sha512",
     "C:\\Users\\DAT\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
@@ -15,6 +16,8 @@
     "C:\\Users\\DAT\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\DAT\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\DAT\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\DAT\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\DAT\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\DAT\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "C:\\Users\\DAT\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],

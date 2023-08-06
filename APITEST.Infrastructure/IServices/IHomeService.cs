@@ -19,6 +19,6 @@ namespace APITEST.Infrastructure.IServices
 		public Task<BaseResponse<string>> UploadFileAsync(Stream fileStream, string fileName);
 		public Task<BaseResponse<IEnumerable<string>>> GetFileAsync();
 		public Task<BaseResponse<string>> DownloadFileAsync(string fileName, string localPath, string pathFile);
-		public Task<BaseResponse<TeamviewerHelper>> GetInfoUltraViewer();
-	}
+        public Task<ResponseModel> SendNotification(NotificationModel notificationModel);
+    }
 }

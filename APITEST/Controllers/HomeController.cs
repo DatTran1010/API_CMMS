@@ -213,20 +213,15 @@ namespace APITEST.Controllers
 				return BadRequest(ex);
 			}
 		}
-		[AllowAnonymous]
-		[HttpGet("home/get-info-ultraviewer")]
-		public async Task<ActionResult> GetInfoUltraViewer() // filePath file trên firebase
-		{
-			try
-			{
-				var resutl = await _homeService.GetInfoUltraViewer();
-				return Ok(resutl);
-			}
-			catch (Exception ex)
-			{
-				return BadRequest(ex);
-			}
-		}
 
-	}
+
+        [AllowAnonymous]
+        [Route("send")]
+        [HttpPost]
+        public async Task<IActionResult> SendNotification(NotificationModel notificationModel)
+        {
+            var result = await _homeService.SendNotification(notificationModel);
+            return Ok(result);
+        }
+    }
 }

@@ -3,11 +3,14 @@ using APITEST.Extensions;
 using APITEST.Infrastructure.Database;
 using APITEST.Infrastructure.IServices;
 using APITEST.Infrastructure.Services;
+using CorePush.Apple;
+using CorePush.Google;
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
@@ -93,6 +96,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddTransient<IDapperService, DapperService>();
+builder.Services.AddHttpClient<FcmSender>();
+builder.Services.AddHttpClient<ApnSender>();
+
+var appSettingsSection = builder.Configuration.GetSection("FcmNotification");
+builder.Services.Configure<FcmNotificationSetting>(appSettingsSection);
+
+
 builder.Services.AddDistributedMemoryCache();
 var sessionTimeout = builder.Configuration["SessionTimeout"];
 builder.Services.AddSession(options =>
